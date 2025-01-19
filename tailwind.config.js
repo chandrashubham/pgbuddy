@@ -8,6 +8,20 @@ module.exports = {
   ],
   theme: {
   	extend: {
+		keyframes: {
+			fadeInDown: {
+			  '0%': { opacity: '0', transform: 'translateY(-20px)' },
+			  '100%': { opacity: '1', transform: 'translateY(0)' },
+			},
+			fadeInUp: {
+			  '0%': { opacity: '0', transform: 'translateY(20px)' },
+			  '100%': { opacity: '1', transform: 'translateY(0)' },
+			},
+		  },
+		  animation: {
+			'fade-in-down': 'fadeInDown 1s ease-out',
+			'fade-in-up': 'fadeInUp 1s ease-out',
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -59,3 +73,5 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+  

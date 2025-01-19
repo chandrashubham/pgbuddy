@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Sunrise PG",
+    "location": "Bangalore",
+    "price": 7500,
+    "amenities": ["Wi-Fi", "Meals", "Laundry"],
+    "image": "room1.jpg",
+    "description": "A comfortable and affordable PG located in the heart of Bangalore with modern amenities."
+  },
+  {
+    "id": 2,
+    "name": "Elite Stay",
+    "location": "Chennai",
+    "price": 6500,
+    "amenities": ["Wi-Fi", "Air Conditioning", "Parking"],
+    "image": "https://images.oyoroomscdn.com/uploads/hotel_image/113125/medium/qvbwihuqjjrk.jpg",
+    "description": "An elite PG providing luxurious stay with all essential facilities in Chennai."
+  },
+  {
+    "id": 3,
+    "name": "Cozy Nest PG",
+    "location": "Hyderabad",
+    "price": 8000,
+    "amenities": ["Meals", "Gym", "Housekeeping"],
+    "image": "https://images.oyoroomscdn.com/uploads/hotel_image/258800/medium/vmiiflvxdbno.jpg",
+    "description": "A cozy and well-maintained PG in Hyderabad offering comprehensive amenities for a comfortable stay."
+  },
+  {
+    "id": 4,
+    "name": "Haven PG",
+    "location": "Mumbai",
+    "price": 9000,
+    "amenities": ["Wi-Fi", "TV", "Kitchen"],
+    "image": "https://images.oyoroomscdn.com/uploads/hotel_image/256036/medium/saiykuxmlqdo.jpg",
+    "description": "A haven for residents providing premium facilities and a homely environment in Mumbai."
+  },
+  {
+    "id": 5,
+    "name": "Safe Haven PG",
+    "location": "Pune",
+    "price": 7000,
+    "amenities": ["Wi-Fi", "Meals", "Laundry"],
+    "image": "https://images.oyoroomscdn.com/uploads/hotel_image/252181/medium/twlprhodeldn.jpg",
+    "description": "A safe and secure PG in Pune with top-notch amenities and a friendly environment."
+  },
+  {
+    "id": 6,
+    "name": "City Comfort PG",
+    "location": "Delhi",
+    "price": 8500,
+    "amenities": ["Wi-Fi", "Parking", "Gym"],
+    "image": "https://images.oyoroomscdn.com/uploads/hotel_image/233767/medium/aepgjcdiitnq.jpg",
+    "description": "A comfortable PG in Delhi offering excellent facilities and a convenient location."
+  }
+]

@@ -2,124 +2,79 @@ import React from 'react'
 
 const about = () => {
   return (
-    <section className="text-gray-600 body-font">
+<section className="body-font">
   <div className="container px-5 py-24 mx-auto">
     <div className="flex flex-col text-center w-full mb-20">
-      <h1 className="text-2xl font-medium title-font mb-4 text-gray-900">OUR TEAM</h1>
-      <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p>
+      <h1 className="text-3xl font-semibold title-font mb-4">Meet Our Team</h1>
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
+        We are a passionate group of individuals dedicated to delivering innovative solutions.
+      </p>
     </div>
-    <div className="flex flex-wrap -m-4">
-      <div className="p-4 lg:w-1/4 md:w-1/2">
-        <div className="h-full flex flex-col items-center text-center">
-          {/* <img alt="team" className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4" src="https://dummyimage.com/200x200"> */}
-          <div className="w-full">
-            <h2 className="title-font font-medium text-lg text-gray-900">Alper Kamu</h2>
-            <h3 className="text-gray-500 mb-3">UI Developer</h3>
-            <p className="mb-4">DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
-            <span className="inline-flex">
-              <a className="text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                </svg>
-              </a>
-            </span>
+    <div className="flex flex-wrap justify-center -m-4">
+      {[
+        {
+          name: "Shubham Chandra",
+          role: "UI Developer & Backend Developer",
+          description: "Expert in creating seamless user experiences with modern design principles.",
+          image: "data:image/jpeg;base64,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",
+        },
+        {
+          name: "Shivang Kashyap",
+          role: "UI designer ",
+          description: "Enthusiast of scalable architecture and efficient code practices.",
+          image: "data:image/jpeg;base64,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",
+        },
+      ].map((member, index) => (
+        <div key={index} className="p-4 lg:w-1/3 md:w-1/2 w-full">
+          <div className="h-full flex flex-col items-center text-center">
+            <img
+              alt="team"
+              className="rounded-full w-40 h-40 object-cover object-center mb-4"
+              src={member.image}
+            />
+            <div className="w-full">
+              <h2 className="title-font font-medium text-lg">{member.name}</h2>
+              <h3 className="text-sm mb-3">{member.role}</h3>
+              <p className="mb-4">{member.description}</p>
+              <span className="inline-flex">
+               
+                <a href="https://www.facebook.com/" target='_blank' className="ml-2 hover:text-blue-400">
+                  <svg
+                    fill="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-6 h-6"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M22 12c0-5.52-4.48-10-10-10s-10 4.48-10 10c0 5.2 4.02 9.45 9.17 9.94v-7.06h-2.72v-2.86h2.72v-1.87c0-2.52 1.56-3.89 3.84-3.89 1.09 0 2.04.08 2.31.12v2.68h-1.59c-1.25 0-1.5.6-1.5 1.48v1.84h3l-.48 2.86h-2.52v7.05c5.14-.5 9.16-4.74 9.16-9.94z"></path>
+                  </svg>
+                </a>
+                <a href="https://www.instagram.com/" target='_blank' className="ml-2 hover:text-pink-500">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-6 h-6"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37a4 4 0 0 1-7.9 1.36 4 4 0 0 1 7.9-1.36zm2.5-4.87h.01"></path>
+                  </svg>
+                </a>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="p-4 lg:w-1/4 md:w-1/2">
-        <div className="h-full flex flex-col items-center text-center">
-          {/* <img alt="team" className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4" src="https://dummyimage.com/201x201"> */}
-          <div className="w-full">
-            <h2 className="title-font font-medium text-lg text-gray-900">Holden Caulfield</h2>
-            <h3 className="text-gray-500 mb-3">UI Developer</h3>
-            <p className="mb-4">DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
-            <span className="inline-flex">
-              <a className="text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                </svg>
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="p-4 lg:w-1/4 md:w-1/2">
-        <div className="h-full flex flex-col items-center text-center">
-          {/* <img alt="team" className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4" src="https://dummyimage.com/202x202"> */}
-          <div className="w-full">
-            <h2 className="title-font font-medium text-lg text-gray-900">Atticus Finch</h2>
-            <h3 className="text-gray-500 mb-3">UI Developer</h3>
-            <p className="mb-4">DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
-            <span className="inline-flex">
-              <a className="text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                </svg>
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="p-4 lg:w-1/4 md:w-1/2">
-        <div className="h-full flex flex-col items-center text-center">
-          {/* <img alt="team" className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4" src="https://dummyimage.com/203x203"> */}
-          <div className="w-full">
-            <h2 className="title-font font-medium text-lg text-gray-900">Henry Letham</h2>
-            <h3 className="text-gray-500 mb-3">UI Developer</h3>
-            <p className="mb-4">DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
-            <span className="inline-flex">
-              <a className="text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-2 text-gray-500">
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                </svg>
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
+
+
+
   )
 }
 
