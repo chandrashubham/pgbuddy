@@ -6,6 +6,8 @@ const Page = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,8 +30,11 @@ const Page = () => {
       const result = await response.json();
 
       if (result.success) {
-        setResponseMessage('Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' }); // Clear the form
+        setResponseMessage('Message sent Successfully!');
+    setShowAlert(true); // Show alert
+        setFormData({ name: '', email: '', message: '' });
+     
+       
       } else {
         setResponseMessage(result.error || 'Failed to send message.');
       }
@@ -37,72 +42,101 @@ const Page = () => {
       setResponseMessage('Error sending message.');
     } finally {
       setIsSubmitting(false);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 1000);
     }
   };
 
   return (
-    <section className="body-font relative">
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">Contact Us</h1>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Fill out the form below to send us a message.
-          </p>
-        </div>
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
-          <form className="flex flex-wrap -m-2" onSubmit={handleSubmit}>
-            <div className="p-2 w-1/2">
-              <div className="relative">
-                <label htmlFor="name" className="leading-7 text-sm">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full rounded border border-gray-300 focus:border-orange-500 focus:ring-orange-200 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-1/2">
-              <div className="relative">
-                <label htmlFor="email" className="leading-7 text-sm">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full rounded border border-gray-300 focus:border-orange-500 focus:ring-orange-200 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="message" className="leading-7 text-sm">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 h-32 text-base outline-none py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex mx-auto text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-600 rounded text-lg"
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-            </div>
-            {responseMessage && <p className="text-center text-sm mt-4">{responseMessage}</p>}
-          </form>
-        </div>
+<section className="relative w-full bg-gradient-to-br from-orange-50 to-white dark:from-gray-900 dark:to-gray-800 py-24">
+  <div className="relative z-10 container mx-auto px-6 lg:px-12">
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+      
+      {/* 📸 Left Side Full Height Illustration */}
+      <div className="hidden lg:flex w-full max-w-2xl h-full">
+        <img
+          src="https://img.freepik.com/free-vector/organic-flat-man-customer-support_23-2148893295.jpg?ga=GA1.1.1658570461.1743932466&semt=ais_hybrid&w=740"
+          alt="Contact Illustration"
+          className="object-contain h-full w-full opacity-60 rounded-lg"
+        />
       </div>
-    </section>
+
+      {/* ✉️ Contact Form */}
+      <div className="w-full lg:w-1/2 bg-white dark:bg-gray-900 shadow-2xl rounded-3xl p-10">
+        <h2 className="text-4xl font-extrabold text-center text-gray-800 dark:text-white mb-4">
+          Let's Connect
+        </h2>
+        <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
+          We'd love to hear from you! Fill out the form and we'll be in touch.
+        </p>
+
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full mt-1 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full mt-1 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+            <textarea
+              name="message"
+              rows="5"
+              value={formData.message}
+              onChange={handleInputChange}
+              className="w-full mt-1 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition duration-300"
+          >
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </button>
+
+          {showAlert && (
+            <div
+              className={`text-center mt-4 font-semibold transition-opacity duration-300 ${
+                responseMessage.toLowerCase().includes("success")
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {responseMessage}
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+  
+  
   );
 };
 

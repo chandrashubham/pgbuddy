@@ -1,130 +1,165 @@
+'use client';
 
-import Link from "next/link";
-import React from "react";
-import { Button } from "./ui/button";
-import { ModeToggle } from "./theme";
-import Image from "next/image";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { auth, signIn, signOut } from "@/auth";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation'; // ✅ Add this
 
-const Navbar = async () => {
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter(); // ✅ Initialize router
 
-  
-  const session = await auth();
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false }); // prevent NextAuth auto-redirect
+    router.push('/'); // ✅ Redirect to homepage after logout
+  };
+
   return (
-    <header className="sticky flex justify-between top-0 items-center border-b-2 bg-background/50 backdrop-blur z-50">
-      <div className="logo ml-11">
-        <Link href={"/"}>
-          <Image width={70} height={100} alt="logo" src="/logo.png"></Image>
-        </Link>
-      </div>
-      <nav>
-        <ul>
-          <li className="hidden md:flex gap-4 items-center">
-            <Link
-              href="/"
-              className="hover:scale-105 font-semibold hover:text-orange-400"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="hover:scale-105 font-semibold hover:text-orange-400"
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:scale-105 font-semibold hover:text-orange-400"
-            >
-              Contact Us
-            </Link>
-            <Link
-              href="/roomList"
-              className="hover:scale-105 font-semibold hover:text-orange-400"
-            >
-              PGs
-            </Link>
-          </li>
-        </ul>
-      </nav>
-     
-      <div className="flex text-sm my-4 btn  items-center mr-4 mb-4 gap-3">
-      <div>
-  {session && session.user ? (
-    <>
-      <span className="mr-5" href={`/user/${session.id}`}>
-        <span>{session.user.name}</span>
-      </span>
-    
-      <Button className=" bg-orange-400 hover:bg-orange-500 mr-5" onClick={async () => {
-        "use server";
-        await signOut("google");
+    <header className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-900 shadow-md">
+      {/* Logo - Kept original design */}
+      <Link href="/" className="flex items-center space-x-2">
+        <Image src="/logo.png" alt="Logo" width={40} height={40} />
+        <span className="font-bold text-xl text-orange-500">PgBuddy</span>
+      </Link>
 
-      }}>
-       Logout
-      </Button>
-     
-      <Link href="/user/register">
-          <Button className=" bg-orange-400 hover:bg-orange-500">
+      {/* Desktop Nav */}
+      <nav className="hidden md:flex gap-6 items-center">
+        <Link href="/" className="hover:text-orange-500 font-medium transition">Home</Link>
+        <Link href="/about" className="hover:text-orange-500 font-medium transition">About</Link>
+        <Link href="/contact" className="hover:text-orange-500 font-medium transition">Contact</Link>
+        <Link href="/roomList" className="hover:text-orange-500 font-medium transition">PGs</Link>
+
+        {session && (
+            <button
+            onClick={() => {
+              setMenuOpen(false);
+              router.push("/user/register");
+            }}
+            className="text-sm px-4 py-2 bg-green-500 text-white rounded-full w-fit hover:bg-green-600 transition"
+          >
             Register
-          </Button>
-        </Link>
-    </>
-  ) : (
-    <Button className=" bg-orange-400 hover:bg-orange-500"
-      onClick={async () => {
-        "use server";
-        await signIn("google");
-        window.location.href = "/";
-      }}
-    >
-      Sign in
-    </Button>
-  )}
-</div>
-        
-<div className="menu sm:hidden">
-      <Sheet>
-        <SheetTrigger>
-          <Image width={20} height={40} alt="logo" src="/menu.svg" />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>PgBuddy</SheetTitle>
-            <SheetDescription>
-              <div className="flex flex-col">
-                <Link href="/" className="hover:scale-105 font-semibold hover:text-orange-400">
-                  Home
-                </Link>
-                <Link href="/about" className="hover:scale-105 font-semibold hover:text-orange-400">
-                  About
-                </Link>
-                <Link href="/contact" className="hover:scale-105 font-semibold hover:text-orange-400">
-                  Contact Us
-                </Link>
-                <Link href="/roomList" className="hover:scale-105 font-semibold hover:text-orange-400">
-                  PGs
-                </Link>
-              </div>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+          </button>
+        )}
+
+        {session ? (
+          <>
+            <span className="text-sm text-gray-700 dark:text-gray-200 font-medium">{session.user?.name}</span>
+            <button
+              onClick={handleLogout} // ✅ Use custom handler
+              className="text-sm font-medium px-4 py-2 rounded-full border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => signIn('google', { callbackUrl: '/' })}
+            className="text-sm font-medium px-4 py-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition"
+          >
+            Login
+          </button>
+        )}
+
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="ml-4 bg-gray-200 dark:bg-gray-700 p-2 rounded-full transition"
+        >
+          {darkMode ? '🌙' : '☀️'}
+        </button>
+      </nav>
+
+      {/* Hamburger for Mobile */}
+      <div
+        className="md:hidden flex flex-col justify-center items-end cursor-pointer"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <div className={`w-6 h-0.5 bg-black dark:bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+        <div className={`w-6 h-0.5 bg-black dark:bg-white my-1 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`} />
+        <div className={`w-6 h-0.5 bg-black dark:bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
       </div>
-        <div className="hidden md:flex">
-          <ModeToggle />
+
+      {/* Side Drawer */}
+      <div className={`fixed top-0 right-0 h-full w-2/3 max-w-sm bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full'} z-50`}>
+        <div className="flex flex-col p-6 pt-16 space-y-6 text-lg">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-orange-500 transition">Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:text-orange-500 transition">About</Link>
+          <Link href="/contact" onClick={() => setMenuOpen(false)} className="hover:text-orange-500 transition">Contact</Link>
+          <Link href="/roomList" onClick={() => setMenuOpen(false)} className="hover:text-orange-500 transition">PGs</Link>
+
+          {session && (
+            // <Link
+            //   href="user/register"
+            //   onClick={() => setMenuOpen(false)}
+            //   className="text-sm px-4 py-2 bg-green-500 text-white rounded-full w-fit hover:bg-green-600 transition"
+            // >
+            //   Register
+            // </Link>
+            <button
+  onClick={() => {
+    setMenuOpen(false);
+    router.push("/user/register");
+  }}
+  className="text-sm px-4 py-2 bg-green-500 text-white rounded-full w-fit hover:bg-green-600 transition"
+>
+  Register
+</button>
+          )}
+
+          {session ? (
+            <>
+              <span className="text-sm text-gray-700 dark:text-gray-200 font-medium">{session.user?.name}</span>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleLogout(); // ✅ Use custom logout
+                }}
+                className="text-orange-500 font-medium hover:underline"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                signIn('google', { callbackUrl: '/' });
+                setMenuOpen(false);
+              }}
+              className="bg-orange-500 text-white px-4 py-2 rounded-full w-fit hover:bg-orange-600 transition"
+            >
+              Login
+            </button>
+          )}
+
+          <button
+            onClick={() => {
+              setDarkMode(!darkMode);
+              setMenuOpen(false);
+            }}
+            className="text-left text-orange-500"
+          >
+            {darkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
+          </button>
         </div>
       </div>
+
+      {/* Backdrop */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-30 z-40"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
     </header>
   );
-};
-
-export default Navbar;
+}

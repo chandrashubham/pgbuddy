@@ -1,85 +1,129 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function RoomList() {
-  const [rooms, setRooms] = useState([]);
+export default function RoomDetails() {
+  const { slug } = useParams();
+  const [room, setRoom] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchRooms = async () => {
+    const fetchRoom = async () => {
       try {
-        const res = await fetch("/api/getroom");
-        if (!res.ok) throw new Error("Failed to fetch rooms");
+        const res = await fetch(`/api/getroom/${slug}`);
+        if (!res.ok) throw new Error("Failed to fetch room");
         const data = await res.json();
-        setRooms(data.rooms);
-
-        const newIds = data.rooms.map((room) => {
-          return room._id;
-        });
-
-        console.log(newIds);
-    
+        setRoom(data.room);
       } catch (error) {
-        console.error("Error fetching rooms:", error.message);
+        console.error("Error fetching room:", error.message);
         setError(error.message);
       }
     };
 
-    fetchRooms();
-  }, []);
+    if (slug) fetchRoom();
+  }, [slug]);
 
-  if (error)
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  if (!rooms.length) return <div className="text-center">Loading...</div>;
+  if (error) return <div className="text-center text-red-500">Error: {error}</div>;
+  if (!room) return <div className="text-center">Loading...</div>;
 
   return (
-    <div className="min-h-screen py-10">
-      <div className="container mx-auto px-6">
-        <div className=" shadow-lg rounded-lg overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Image Section */}
-            <div className="relative">
-              <img
-                src={rooms[1].image}
-                alt="Room Image"
-                className="w-full h-[300px] md:h-[400px] object-cover rounded-lg"
-              />
-            </div>
-            <div className="relative">
-              <img
-                src={rooms[2].image}
-                alt="Room Image"
-                className="w-full h-[300px] md:h-[400px] object-cover rounded-lg"
-              />
+    <div className="min-h-screen bg-gray-50 py-10">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="bg-white shadow-xl rounded-3xl overflow-hidden">
+          {/* Gallery */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-100">
+            <img
+              src={room.image}
+              alt={room.title}
+              className="w-full h-80 object-cover rounded-lg"
+            />
+            <div className="grid grid-cols-2 gap-4">
+              {room.gallery?.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt={`Gallery ${i + 1}`}
+                  className="w-full h-36 object-cover rounded-lg"
+                />
+              ))}
             </div>
           </div>
 
-          {/* Room Details */}
-          <div className="p-8">
-            <h2 className="text-3xl font-bold  mb-4">
-              {rooms[1]?.title || "Room Title"}
-            </h2>
-            <p className=" mb-4">
-              {rooms[1]?.description || "Room description here."}
-            </p>
-            <ul className="space-y-2">
-              <li>
-                <span className="font-semibold">Price:</span> ₹
-                {rooms[1]?.price || "N/A"}
-              </li>
-              <li>
-                <span className="font-semibold">Size:</span> 500 sq ft
-              </li>
-              <li>
-                <span className="font-semibold">Beds:</span> 2 Queen Beds
-              </li>
-              <li>
-                <span className="font-semibold">Amenities:</span> Wi-Fi, TV,
-                Mini Bar
-              </li>
-            </ul>
-            <Button className="mt-6 bg-orange-500 text-white px-6 py-3 rounded hover:bg-orange-600 transition duration-300">
+          {/* Info */}
+          <div className="p-8 space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <h2 className="text-3xl font-bold text-gray-800">{room.title}</h2>
+              <span className="text-xl font-semibold text-orange-500">
+                ₹{room.price}/month
+              </span>
+            </div>
+
+            <p className="text-gray-600">{room.description}</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-sm">
+              <div>
+                <span className="font-semibold">Location:</span> {room.location}
+              </div>
+              <div>
+                <span className="font-semibold">Address:</span> {room.address}
+              </div>
+              <div>
+                <span className="font-semibold">Sharing Type:</span> {room.sharingType}
+              </div>
+              <div>
+                <span className="font-semibold">Gender:</span> {room.type}
+              </div>
+              <div>
+                <span className="font-semibold">Status:</span>{" "}
+                <span
+                  className={`font-medium ${
+                    room.status === "Available" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {room.status}
+                </span>
+              </div>
+              <div>
+                <span className="font-semibold">Slug:</span> {room.slug}
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div className="border-t pt-6 text-gray-800">
+              <h3 className="text-lg font-semibold mb-3">Contact Info</h3>
+              <div className="flex flex-col gap-2 text-sm">
+                <p className="flex items-center gap-2">
+                  <Phone size={16} /> {room.phone}
+                </p>
+                <p className="flex items-center gap-2">
+                  <Mail size={16} /> {room.email}
+                </p>
+                <p className="flex items-center gap-2">
+                  <MapPin size={16} /> {room.location}
+                </p>
+              </div>
+            </div>
+
+            {/* Amenities */}
+            {room.amenities?.length > 0 && (
+              <div className="pt-6">
+                <h3 className="text-lg font-semibold mb-3">Amenities</h3>
+                <ul className="flex flex-wrap gap-2 text-sm text-gray-700">
+                  {room.amenities.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="bg-gray-200 px-3 py-1 rounded-full"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 mt-6 rounded-full transition duration-300">
               Book Now
             </Button>
           </div>
