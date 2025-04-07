@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Loader from "./Loader";
 import { ThemeProvider } from "./theme-provider";
-import { AuthProvider } from "./authProvider/authProvider";
+import { AuthProvider } from "./authProvider/AuthProvider";
 
 export default function ClientLayout({ children }) {
   const [loading, setLoading] = useState(false);
