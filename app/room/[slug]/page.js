@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function RoomDetails() {
   const { slug } = useParams();
@@ -123,8 +124,8 @@ export default function RoomDetails() {
               </div>
             )}
 
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 mt-6 rounded-full transition duration-300">
-              Book Now
+            <Button  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 mt-6 rounded-full transition duration-300">
+             <Link href="/book">Book Now</Link> 
             </Button>
           </div>
         </div>
