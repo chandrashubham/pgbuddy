@@ -11,6 +11,8 @@ const BookNowPage = () => {
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: '', text: '' })
+  
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -33,6 +35,7 @@ const BookNowPage = () => {
 
       if (res.ok) {
         setMessage({ type: 'success', text: data.message || 'Booking successful!' })
+        setShowAlert(true); // Show alert
         setFormData({ fullName: '', email: '', moveInDate: '', preferredPG: '' })
       } else {
         setMessage({ type: 'error', text: data.error || 'Something went wrong!' })
@@ -42,7 +45,10 @@ const BookNowPage = () => {
       setMessage({ type: 'error', text: 'Internal server error.' })
     }
 
-    setLoading(false)
+    setLoading(false);
+    setTimeout(() => {
+        setShowAlert(false);
+      }, 1000);
   }
 
   return (
@@ -122,7 +128,7 @@ const BookNowPage = () => {
             </button>
           </form>
 
-          {message.text && (
+          {showAlert && (
             <p
               className={`mt-4 text-center text-sm ${
                 message.type === 'success'
