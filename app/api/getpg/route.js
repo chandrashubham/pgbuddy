@@ -1,19 +1,35 @@
-import { NextResponse } from "next/server";
-import connectDb from "@/lib/mongodb";
-import Pg from "@/app/models/Pgs";
+import { NextResponse } from 'next/server';
+import connectDb from '@/lib/mongodb';
+import Rooms from '@/app/models/Rooms';
 
-// Connect to MongoDB
-await connectDb();
+export async function GET(req) {
+  await connectDb();
 
-export async function GET() {
+  const { searchParams } = new URL(req.url);
+  const search = searchParams.get("search")?.toLowerCase();
+
+  let query = {};
+
+  if (search) {
+    const regex = new RegExp(search, 'i'); // case-insensitive
+
+    query = {
+      $or: [
+        { title: regex },
+        { location: regex },
+        { address: regex },
+        { description: regex },
+        { type: regex },
+        { sharingType: regex },
+        { 'owner.name': regex }
+      ],
+    };
+  }
+
   try {
-    const pgs = await Pg.find(); // Fetch all rooms from MongoDB
-    return NextResponse.json({ success: true, pgs }, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching rooms:", error.message);
-    return NextResponse.json(
-      { success: false, error: "Internal Server Error" },
-      { status: 500 }
-    );
+    const pgs = await Rooms.find(query);
+    return NextResponse.json({ success: true, pgs });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
 }
