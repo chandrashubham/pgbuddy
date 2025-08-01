@@ -63,22 +63,22 @@ const HeroSection = () => {
     const matches = pgs.filter(pg => deepMatch(pg, cleanedSearchTerm));
 
     if (matches.length > 0) {
-      setFilteredPgs(matches); // Show only matching PGs
+      setFilteredPgs(matches); 
       setNoResult(false);
     } else {
-      setFilteredPgs([]); // Show empty result
+      setFilteredPgs([]); 
       setNoResult(true);
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      filterPGs(); // Trigger search on Enter key press
+      filterPGs(); 
     }
   };
 
   useEffect(() => {
-    filterPGs(); // Trigger search whenever searchTerm updates
+    filterPGs(); 
   }, [searchTerm]);
 
   return (
